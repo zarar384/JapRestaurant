@@ -1,5 +1,6 @@
 ﻿namespace Jap.Services.ProductAPI.Models.Dtos
 {
+    //access to generic types
     public class ResponseDto
     {
         public bool IsSuccess { get; set; } = true;

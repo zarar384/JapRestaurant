@@ -58,7 +58,7 @@ namespace Jap.Services.ProductAPI.Repository
 
         public async Task<IEnumerable<ProductDto>> GetProducts()
         {
-            List<Product> prductList = await _db.Products.ToListAsync();
+            IEnumerable<Product> prductList = await _db.Products.ToListAsync();
             return _mapper.Map<List<ProductDto>>(prductList);
         }
     }
