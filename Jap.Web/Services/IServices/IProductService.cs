@@ -2,7 +2,7 @@
 
 namespace Jap.Web.Services.IServices
 {
-    public interface IProductService
+    public interface IProductService: IBaseService
     {
         Task<T> GetAllProductAsync<T>();
         Task<T> GetProductByIdAsync<T>(int id);

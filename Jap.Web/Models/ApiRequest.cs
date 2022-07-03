@@ -1,4 +1,4 @@
-﻿using static Jap.Web.SDcs;
+﻿using static Jap.Web.SD;
 
 namespace Jap.Web.Models
 {
