@@ -21,11 +21,11 @@ namespace Jap.Services.ProductAPI.Repository
             Product product = _mapper.Map<ProductDto, Product>(productDto);
             if (product.ProductId > 0)
             {
-                _db.Products.Update(product);
+                _db.Products.Add(product);
             }
             else
             {
-                _db.Products.Add(product);
+                _db.Products.Update(product);
             }
             await _db.SaveChangesAsync();
             return _mapper.Map<Product, ProductDto>(product);
