@@ -22,7 +22,7 @@ namespace Jap.Web.Services
             });
         }
 
-        public Task<T> DeleteProductByAsincAsync<T>(string id)
+        public Task<T> DeleteProductByAsincAsync<T>(int id)
         {
             return this.SendAsync<T>(new ApiRequest()
             {
