@@ -3,7 +3,7 @@
 
 using Duende.IdentityServer.Models;
 
-namespace JapRestaurant.Pages.Error;
+namespace Jap.Services.Identity.MainModule.Home.Error;
 
 public class ViewModel
 {

@@ -2,7 +2,7 @@ using Duende.IdentityServer.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace JapRestaurant.Pages.Error;
+namespace Jap.Services.Identity.MainModule.Home.Error;
 
 [AllowAnonymous]
 [SecurityHeaders]

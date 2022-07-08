@@ -5,7 +5,7 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace JapRestaurant.Pages;
+namespace Jap.Services.Identity.MainModule;
 
 public class SecurityHeadersAttribute : ActionFilterAttribute
 {

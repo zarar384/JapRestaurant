@@ -1,5 +1,6 @@
 using Jap.Services.Identity;
 using Jap.Services.Identity.DbContexts;
+using Jap.Services.Identity.Initializer;
 using Jap.Services.Identity.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -32,11 +33,18 @@ var identityBuilder = builder.Services.AddIdentityServer(option =>
   .AddInMemoryClients(SD.Clients)
   .AddAspNetIdentity<ApplicationUser>();//identification using the User
 
+//Add Initializer
+builder.Services.AddScoped<IDbInitializer, DbInitializer>();
+
 //special data for subscription. Should store the key
 //automatically generate key for easy development phase
 identityBuilder.AddDeveloperSigningCredential();
 
 var app = builder.Build();
+
+//add IDbInitializer to configure 
+var scope = app.Services.CreateScope();
+IDbInitializer dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -53,6 +61,8 @@ app.UseRouting();
 
 app.UseIdentityServer();
 app.UseAuthorization();
+
+dbInitializer.Initialize();
 
 app.MapControllerRoute(
     name: "default",

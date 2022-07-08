@@ -7,9 +7,9 @@ using IdentityModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-
+using Jap.Services.Identity.MainModule;
 namespace JapRestaurant.Pages.Consent;
-
+using Jap.Services.Identity.MainModule;
 [Authorize]
 [SecurityHeadersAttribute]
 public class Index : PageModel

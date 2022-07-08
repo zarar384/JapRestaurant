@@ -6,7 +6,7 @@ using Duende.IdentityServer.Validation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-
+using Jap.Services.Identity.MainModule;
 namespace JapRestaurant.Pages.Ciba;
 
 [Authorize]
