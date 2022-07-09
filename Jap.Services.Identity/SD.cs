@@ -45,7 +45,7 @@ namespace Jap.Services.Identity
                 {
                     ClientId = "jap",
                     ClientSecrets={new Secret("secret".Sha512())},
-                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                    AllowedGrantTypes = GrantTypes.Code,
                     //url main app. signin-oidc - needed for OpenId Connect
                     RedirectUris={ "https://localhost:44356/signin-oidc" },
                     //where to pass the implementation of the code after successfully logging out of the account

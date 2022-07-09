@@ -1,10 +1,16 @@
-﻿using Duende.IdentityServer.Services;
-using Jap.Services.Identity.Models;
-using JapRestaurant.Pages;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+// Copyright (c) Duende Software. All rights reserved.
+// See LICENSE in the project root for license information.
 
-namespace Jap.Services.Identity.MainModule.Home
+
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
+using Duende.IdentityServer.Services;
+
+namespace IdentityServerHost.Quickstart.UI
 {
     [SecurityHeaders]
     [AllowAnonymous]
@@ -44,7 +50,7 @@ namespace Jap.Services.Identity.MainModule.Home
             var message = await _interaction.GetErrorContextAsync(errorId);
             if (message != null)
             {
-                //vm.Error = message;
+                vm.Error = message;
 
                 if (!_environment.IsDevelopment())
                 {
