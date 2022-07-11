@@ -33,7 +33,7 @@ builder.Services.AddAuthentication("Bearer")
 //Authentication verification
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("ApiScop", policy =>
+    options.AddPolicy("ApiScope", policy =>
     {
         policy.RequireAuthenticatedUser();
         policy.RequireClaim("scope", "jap");
@@ -79,11 +79,14 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
+app.UseRouting();
+app.UseAuthentication();
 
 app.UseAuthorization();
 

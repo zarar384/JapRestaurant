@@ -147,8 +147,8 @@ namespace IdentityServerHost.Quickstart.UI
                         throw new Exception("invalid return url");
                     }
                 }
-               
-                await _events.RaiseAsync(new UserLoginFailureEvent(model.Username, "invalid credentials", clientId:context?.Client.ClientId));
+
+                await _events.RaiseAsync(new UserLoginFailureEvent(model.Username, "invalid credentials", clientId: context?.Client.ClientId));
                 ModelState.AddModelError(string.Empty, AccountOptions.InvalidCredentialsErrorMessage);
             }
 
@@ -157,7 +157,7 @@ namespace IdentityServerHost.Quickstart.UI
             return View(vm);
         }
 
-        
+
         /// <summary>
         /// Show logout page
         /// </summary>
@@ -226,7 +226,7 @@ namespace IdentityServerHost.Quickstart.UI
             return View(vm);
         }
 
-       
+
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -267,7 +267,8 @@ namespace IdentityServerHost.Quickstart.UI
                             new Claim(JwtClaimTypes.FamilyName, model.FirstName),
                             new Claim(JwtClaimTypes.GivenName, model.LastName),
                             new Claim(JwtClaimTypes.WebSite, "http://"+model.Username+".com"),
-                            new Claim(JwtClaimTypes.Role,"User") });
+                           // new Claim(JwtClaimTypes.Role,"User") 
+                    });
 
                     var context = await _interaction.GetAuthorizationContextAsync(model.ReturnUrl);
                     var loginresult = await _signInManager.PasswordSignInAsync(model.Username, model.Password, false, lockoutOnFailure: true);
