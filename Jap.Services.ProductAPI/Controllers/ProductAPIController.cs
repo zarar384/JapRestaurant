@@ -18,7 +18,6 @@ namespace Jap.Services.ProductAPI.Controllers
             _productRepository = productRepository;
         }
 
-        [Authorize]
         [HttpGet]
         public async Task<object> Get()
         {
@@ -36,7 +35,6 @@ namespace Jap.Services.ProductAPI.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         [Route("{id}")]
         public async Task<object> Get(int id)
         {

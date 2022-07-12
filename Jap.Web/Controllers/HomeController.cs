@@ -1,7 +1,9 @@
 ﻿using Jap.Web.Models;
+using Jap.Web.Services.IServices;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Diagnostics;
 
 namespace Jap.Web.Controllers
@@ -9,15 +11,36 @@ namespace Jap.Web.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IProductService _productService;
+        public HomeController(ILogger<HomeController> logger, IProductService productService)
         {
             _logger = logger;
+            _productService = productService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            List<ProductDto> list = new();
+            var response = await _productService.GetAllProductAsync<ResponseDto>("");
+            //product service request
+            if (response != null && response.IsSuccess)
+            {
+                list = JsonConvert.DeserializeObject<List<ProductDto>>(Convert.ToString(response.Result));
+            } 
+            return View(list);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Details(int productId)
+        {
+            ProductDto model = new();
+            var response = await _productService.GetProductByIdAsync<ResponseDto>(productId, "");
+            //product service request
+            if (response != null && response.IsSuccess)
+            {
+                model = JsonConvert.DeserializeObject<ProductDto>(Convert.ToString(response.Result));
+            }
+            return View(model);
         }
 
         public IActionResult Privacy()
