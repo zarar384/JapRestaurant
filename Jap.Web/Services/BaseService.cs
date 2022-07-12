@@ -35,6 +35,13 @@ namespace Jap.Web.Services
                 message.RequestUri = new Uri(apiRequest.Url);
                 //clear
                 client.DefaultRequestHeaders.Clear();
+
+                //get access token
+                if (!string.IsNullOrEmpty(apiRequest.AccessToken))
+                {
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiRequest.AccessToken);
+                }
+
                 //serializing data from API Request
                 if (apiRequest != null)
                 {

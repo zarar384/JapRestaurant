@@ -1,7 +1,10 @@
+using Duende.IdentityServer.AspNetIdentity;
+using Duende.IdentityServer.Services;
 using Jap.Services.Identity;
 using Jap.Services.Identity.DbContexts;
 using Jap.Services.Identity.Initializer;
 using Jap.Services.Identity.Models;
+using Jap.Services.Identity.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -35,6 +38,7 @@ var identityBuilder = builder.Services.AddIdentityServer(option =>
 
 //Add Initializer
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
+builder.Services.AddScoped<IProfileService, ProfileService>();
 
 //special data for subscription. Should store the key
 //automatically generate key for easy development phase
