@@ -1,5 +1,6 @@
 
 using AutoMapper;
+using Jap.Services.ShoppingCartAPI.Repository;
 using Jap.Services.ShoppongCartAPI.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -16,7 +17,7 @@ IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
 builder.Services.AddSingleton(mapper);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 // Add Repositories
-//builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<ICartRepository, CartRepository>();
 builder.Services.AddControllers();
 
 //Authentication Bearer token
