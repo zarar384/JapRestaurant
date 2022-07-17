@@ -8,6 +8,6 @@ namespace Jap.Web.Services.IServices
         Task<T> GetProductByIdAsync<T>(int id, string token);
         Task<T> CreateProduct<T>(ProductDto productDto, string token);
         Task<T> UpdateProductByAsinc<T>(ProductDto productDto, string token);
-        Task<T> DeleteProductByAsincAsync<T>(int id, string token);
+        Task<T> DeleteProductAsync<T>(int id, string token);
     }
 }

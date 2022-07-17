@@ -95,12 +95,12 @@ namespace Jap.Web.Controllers
         public async Task<IActionResult> ProductDelete(ProductDto model)
         {
             var accessToken = await HttpContext.GetTokenAsync("access_token");
-            var response = await _productService.DeleteProductByAsincAsync<ResponseDto>(model.ProductId, accessToken);
-            if (response != null && response.IsSuccess)
+            var response = await _productService.DeleteProductAsync<ResponseDto>(model.ProductId, accessToken);
+            if (response.IsSuccess)
             {
                 return RedirectToAction(nameof(ProductIndex));
             }
-            return NotFound();
+            return View(model);
         }
     }
 }

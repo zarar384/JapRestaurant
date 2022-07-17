@@ -1,7 +1,7 @@
 
 using AutoMapper;
 using Jap.Services.ShoppingCartAPI.Repository;
-using Jap.Services.ShoppongCartAPI.DbContexts;
+using Jap.Services.ShoppingCartAPI.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -86,8 +86,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseRouting();
-app.UseAuthentication();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

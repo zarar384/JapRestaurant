@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Jap.Services.ProductAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220703123556_M3")]
-    partial class M3
+    [Migration("20220717173358_productApi1")]
+    partial class productApi1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

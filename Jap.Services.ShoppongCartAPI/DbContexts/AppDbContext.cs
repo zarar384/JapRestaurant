@@ -1,7 +1,7 @@
 ﻿using Jap.Services.ShoppingCartAPI.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Jap.Services.ShoppongCartAPI.DbContexts
+namespace Jap.Services.ShoppingCartAPI.DbContexts
 {
     public class AppDbContext : DbContext
     {
@@ -13,7 +13,6 @@ namespace Jap.Services.ShoppongCartAPI.DbContexts
         public DbSet<Product> Products { get; set; }
         public DbSet<CartDetails> CartDetails { get; set; }
         public DbSet<CartHeader> CartHeaders { get; set; }
-        public DbSet<Cart> Carts { get; set; }
 
     }
 }

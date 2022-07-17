@@ -22,9 +22,9 @@ namespace Jap.Web.Services
             });
         }
 
-        public Task<T> DeleteProductByAsincAsync<T>(int id, string token)
+        public async Task<T> DeleteProductAsync<T>(int id, string token)
         {
-            return this.SendAsync<T>(new ApiRequest()
+            return await this.SendAsync<T>(new ApiRequest()
             {
                 ApiType = SD.ApiType.DELETE,
                 Url = SD.ProductAPIBase + "/api/products/" + id,

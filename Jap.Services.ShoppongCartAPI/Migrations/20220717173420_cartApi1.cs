@@ -4,7 +4,7 @@
 
 namespace Jap.Services.ShoppingCartAPI.Migrations
 {
-    public partial class M6 : Migration
+    public partial class cartApi1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

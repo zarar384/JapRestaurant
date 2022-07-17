@@ -50,7 +50,7 @@ namespace Jap.Services.ProductAPI.Migrations
 
                     b.HasKey("ProductId");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
 
                     b.HasData(
                         new

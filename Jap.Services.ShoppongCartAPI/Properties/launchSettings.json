@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "Jap.Services.ShoppongCartAPI": {
+    "Jap.Services.ShoppingCartAPI": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
