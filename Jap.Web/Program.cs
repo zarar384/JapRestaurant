@@ -6,10 +6,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 //HTTP
 builder.Services.AddHttpClient<IProductService, ProductService>();
+builder.Services.AddHttpClient<ICartService, CartService>();
 ////base route
 SD.ProductAPIBase = builder.Configuration["ServiceUrls:ProductAPI"];
+SD.ShoppingCartAPIBase = builder.Configuration["ServiceUrls:ShoppingCartAPI"];
+
 //dependency injection
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICartService, CartService>();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 

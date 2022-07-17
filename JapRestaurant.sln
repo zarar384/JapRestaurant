@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jap.Services.ProductAPI", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jap.Services.Identity", "Jap.Services.Identity\Jap.Services.Identity.csproj", "{7C1468C4-2AFE-4CEC-9A09-8C275B2375BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jap.Services.ShoppingCartAPI", "Jap.Services.ShoppongCartAPI\Jap.Services.ShoppingCartAPI.csproj", "{FD7BC0C5-95D2-400E-AC74-4B4444A04B96}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jap.Services.ShoppingCartAPI", "Jap.Services.ShoppongCartAPI\Jap.Services.ShoppingCartAPI.csproj", "{FD7BC0C5-95D2-400E-AC74-4B4444A04B96}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +45,7 @@ Global
 		{0E80EDF3-67CF-4A22-8116-E739E4E6B665} = {EF3386D0-8747-4723-983A-E95526CE0401}
 		{929B2661-B1EA-404E-B24D-E183A6E3CBE5} = {6D0B42C3-572B-4BDE-B184-6DE628544C7D}
 		{7C1468C4-2AFE-4CEC-9A09-8C275B2375BA} = {6D0B42C3-572B-4BDE-B184-6DE628544C7D}
+		{FD7BC0C5-95D2-400E-AC74-4B4444A04B96} = {6D0B42C3-572B-4BDE-B184-6DE628544C7D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DDD0DD85-A6F2-4F6A-8855-27A79E2315DF}

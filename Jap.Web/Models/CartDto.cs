@@ -1,4 +1,4 @@
-﻿namespace Jap.Services.ShoppingCartAPI.Models.Dto
+﻿namespace Jap.Web.Models
 {
     public class CartDto
     {
