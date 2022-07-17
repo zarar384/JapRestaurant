@@ -24,6 +24,8 @@ namespace Jap.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
+            var UserId = User.Claims.Where(u => u.Type == "sub")?.FirstOrDefault()?.Value;
+
             List<ProductDto> list = new();
             var response = await _productService.GetAllProductAsync<ResponseDto>("");
             if (response != null && response.IsSuccess)
