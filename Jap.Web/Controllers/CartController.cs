@@ -1,5 +1,8 @@
-﻿using Jap.Web.Services.IServices;
+﻿using Jap.Web.Models;
+using Jap.Web.Services.IServices;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Jap.Web.Controllers
 {
@@ -13,9 +16,32 @@ namespace Jap.Web.Controllers
             _cartService = cartService;
         }
 
-        public IActionResult CartIndex()
+        public async Task<IActionResult> CartIndex()
         {
-            return View();
+            return View(await LoadCartDtoBasedOnLoggedInUser());
+        }
+
+        //cart instance for correct user
+        private async Task<CartDto> LoadCartDtoBasedOnLoggedInUser()
+        {
+            var userId = User.Claims.Where(u => u.Type == "sub")?.FirstOrDefault()?.Value;
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var response = await _cartService.GetCartByUserIdAsnyc<ResponseDto>(userId, accessToken);
+
+            CartDto cartDto = new();
+            if(response != null && response.IsSuccess)
+            {
+                cartDto = JsonConvert.DeserializeObject<CartDto>(Convert.ToString(response.Result));
+            }
+            
+            if(cartDto.CartHeader != null)
+            {
+                foreach(var detail in cartDto.CartDetails)
+                {
+                    cartDto.CartHeader.OrderTotal += (detail.Product.Price * detail.Count);
+                }
+            }
+            return cartDto;
         }
     }
 }
