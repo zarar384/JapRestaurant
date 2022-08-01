@@ -4,14 +4,15 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Jap.Services.ShoppingCartAPI.Controllers
 {
+
     [ApiController]
     [Route("api/cart")]
-    public class CartAPIController : Controller
+    public class CartController : Controller
     {
         private readonly ICartRepository _cartRepository;
         protected ResponseDto _response;
 
-        public CartAPIController(ICartRepository cartRepository)
+        public CartController(ICartRepository cartRepository)
         {
             _cartRepository = cartRepository;
             this._response = new ResponseDto();
