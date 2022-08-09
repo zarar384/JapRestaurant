@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jap.Services.Identity", "Ja
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jap.Services.ShoppingCartAPI", "Jap.Services.ShoppongCartAPI\Jap.Services.ShoppingCartAPI.csproj", "{FD7BC0C5-95D2-400E-AC74-4B4444A04B96}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jav.Services.CouponAPI", "Jav.Services.CouponAPI\Jav.Services.CouponAPI.csproj", "{74CF9364-8FAC-463A-AA96-3C720A78C7F5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{FD7BC0C5-95D2-400E-AC74-4B4444A04B96}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD7BC0C5-95D2-400E-AC74-4B4444A04B96}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD7BC0C5-95D2-400E-AC74-4B4444A04B96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74CF9364-8FAC-463A-AA96-3C720A78C7F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74CF9364-8FAC-463A-AA96-3C720A78C7F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74CF9364-8FAC-463A-AA96-3C720A78C7F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74CF9364-8FAC-463A-AA96-3C720A78C7F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +52,7 @@ Global
 		{929B2661-B1EA-404E-B24D-E183A6E3CBE5} = {6D0B42C3-572B-4BDE-B184-6DE628544C7D}
 		{7C1468C4-2AFE-4CEC-9A09-8C275B2375BA} = {6D0B42C3-572B-4BDE-B184-6DE628544C7D}
 		{FD7BC0C5-95D2-400E-AC74-4B4444A04B96} = {6D0B42C3-572B-4BDE-B184-6DE628544C7D}
+		{74CF9364-8FAC-463A-AA96-3C720A78C7F5} = {6D0B42C3-572B-4BDE-B184-6DE628544C7D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DDD0DD85-A6F2-4F6A-8855-27A79E2315DF}
