@@ -11,6 +11,7 @@ builder.Services.AddHttpClient<ICartService, CartService>();
 ////base route
 SD.ProductAPIBase = builder.Configuration["ServiceUrls:ProductAPI"];
 SD.ShoppingCartAPIBase = builder.Configuration["ServiceUrls:ShoppingCartAPI"];
+SD.CouponAPIBase = builder.Configuration["ServiceUrls:CouponAPI"];
 
 //dependency injection
 builder.Services.AddScoped<IProductService, ProductService>();
