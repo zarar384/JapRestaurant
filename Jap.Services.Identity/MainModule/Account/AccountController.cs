@@ -485,7 +485,7 @@ namespace IdentityServerHost.Quickstart.UI
                 var idp = User.FindFirst(JwtClaimTypes.IdentityProvider)?.Value;
                 if (idp != null && idp != Duende.IdentityServer.IdentityServerConstants.LocalIdentityProvider)
                 {
-                    var providerSupportsSignout = await HttpContext.GetSchemeSupportsSignOutAsync(idp);
+                    var providerSupportsSignout = await SchemeSupportsSignOutAsync(HttpContext, idp);
                     if (providerSupportsSignout)
                     {
                         if (vm.LogoutId == null)
@@ -502,6 +502,15 @@ namespace IdentityServerHost.Quickstart.UI
             }
 
             return vm;
+        }
+
+        private async Task<bool> SchemeSupportsSignOutAsync(HttpContext httpContext, string scheme)
+        {
+            var handler = await httpContext.RequestServices
+                .GetRequiredService<IAuthenticationHandlerProvider>()
+                .GetHandlerAsync(httpContext, scheme);
+
+            return handler is IAuthenticationSignOutHandler;
         }
     }
 }
