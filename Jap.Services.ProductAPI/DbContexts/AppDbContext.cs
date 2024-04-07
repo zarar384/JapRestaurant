@@ -22,7 +22,7 @@ namespace Jap.Services.ProductAPI.DbContexts
                 Name = "Samosa",
                 Price = 15,
                 Description = "Praesent scelerisque, mi sed ultrices condimentum, lacus ipsum viverra massa, in lobortis sapien eros in arcu. Quisque vel lacus ac magna vehicula sagittis ut non lacus.<br/>Sed volutpat tellus lorem, lacinia tincidunt tellus varius nec. Vestibulum arcu turpis, facilisis sed ligula ac, maximus malesuada neque. Phasellus commodo cursus pretium.",
-                ImageUrl = "https://netmastery.blob.core.windows.net/jap/1.png",
+                ImageUrl = "https://unsplash.com/photos/brown-rice-on-white-and-blue-ceramic-bowl-xBMNxrbQonw",
                 CategoryName = "Appetizer"
             });
             modelBuilder.Entity<Product>().HasData(new Product
@@ -31,7 +31,7 @@ namespace Jap.Services.ProductAPI.DbContexts
                 Name = "Paneer Tikka",
                 Price = 13.99F,
                 Description = "Praesent scelerisque, mi sed ultrices condimentum, lacus ipsum viverra massa, in lobortis sapien eros in arcu. Quisque vel lacus ac magna vehicula sagittis ut non lacus.<br/>Sed volutpat tellus lorem, lacinia tincidunt tellus varius nec. Vestibulum arcu turpis, facilisis sed ligula ac, maximus malesuada neque. Phasellus commodo cursus pretium.",
-                ImageUrl = "https://netmastery.blob.core.windows.net/jap/2.jpg",
+                ImageUrl = "https://unsplash.com/photos/three-white-dimsum-on-brown-bowl-D-vDQMTfAAU",
                 CategoryName = "Appetizer"
             });
             modelBuilder.Entity<Product>().HasData(new Product
@@ -40,7 +40,7 @@ namespace Jap.Services.ProductAPI.DbContexts
                 Name = "Sweet Pie",
                 Price = 10.99F,
                 Description = "Praesent scelerisque, mi sed ultrices condimentum, lacus ipsum viverra massa, in lobortis sapien eros in arcu. Quisque vel lacus ac magna vehicula sagittis ut non lacus.<br/>Sed volutpat tellus lorem, lacinia tincidunt tellus varius nec. Vestibulum arcu turpis, facilisis sed ligula ac, maximus malesuada neque. Phasellus commodo cursus pretium.",
-                ImageUrl = "https://netmastery.blob.core.windows.net/jap/3.jpg",
+                ImageUrl = "https://unsplash.com/photos/raw-meat-on-black-ceramic-plate-PAxbMmoKsF0",
                 CategoryName = "Dessert"
             });
             modelBuilder.Entity<Product>().HasData(new Product
@@ -49,7 +49,7 @@ namespace Jap.Services.ProductAPI.DbContexts
                 Name = "Pav Bhaji",
                 Price = 15,
                 Description = "Praesent scelerisque, mi sed ultrices condimentum, lacus ipsum viverra massa, in lobortis sapien eros in arcu. Quisque vel lacus ac magna vehicula sagittis ut non lacus.<br/>Sed volutpat tellus lorem, lacinia tincidunt tellus varius nec. Vestibulum arcu turpis, facilisis sed ligula ac, maximus malesuada neque. Phasellus commodo cursus pretium.",
-                ImageUrl = "https://netmastery.blob.core.windows.net/jap/1.png",
+                ImageUrl = "https://unsplash.com/photos/sliced-meat-with-green-leaf-on-black-ceramic-plate-e29ha_BbOcQ",
                 CategoryName = "Entree"
             });
         }
