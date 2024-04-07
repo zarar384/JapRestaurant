@@ -368,4 +368,6 @@ FodyWeavers.xsd
 /Jap.Services.Identity/.env
 /Jap.Services.Identity/keys/
 /Jap.Services.Identity/tempkey.jwk
-/Jap.Services.ShoppongCartAPI/Migrations/20240407145821_set couponCode unrequired.cs
+/Jap.Services.ShoppongCartAPI/Migrations/
+/Jav.Services.CouponAPI/Migrations/20240407144812_set couponCode unrequired.cs
+/Jav.Services.CouponAPI/Migrations/20240407144812_set couponCode unrequired.Designer.cs
