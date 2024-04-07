@@ -14,9 +14,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 // Add Connection String
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ApplicationDbConext>(options =>
-    options.UseSqlServer(connectionString));
-
+builder.Services.AddDbContext<ApplicationDbConext>(option =>
+option.UseSqlServer(connectionString));
 //Identity. Use Token instead of password
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbConext>()
@@ -47,10 +46,14 @@ identityBuilder.AddDeveloperSigningCredential();
 
 var app = builder.Build();
 
+//add IDbInitializer to configure 
+var scope = app.Services.CreateScope();
+IDbInitializer dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    //app.UseDeveloperExceptionPage();
+    app.UseDeveloperExceptionPage();
 }
 else
 {
@@ -70,16 +73,11 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-app.UseAuthentication();
+
 app.UseIdentityServer();
 app.UseAuthorization();
 
-//add IDbInitializer to configure 
-using (var serviceScope = app.Services.CreateScope())
-{
-    var service = serviceScope.ServiceProvider.GetService<IDbInitializer>();
-    service.Initialize();
-}
+dbInitializer.Initialize();
 
 app.MapControllerRoute(
     name: "default",

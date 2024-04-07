@@ -19,7 +19,7 @@ namespace Jap.Services.ShoppingCartAPI.Migrations
                 .HasAnnotation("ProductVersion", "6.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("Jap.Services.ShoppingCartAPI.Models.CartDetails", b =>
                 {
@@ -27,7 +27,7 @@ namespace Jap.Services.ShoppingCartAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartDetailsId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartDetailsId"), 1L, 1);
 
                     b.Property<int>("CartHeaderId")
                         .HasColumnType("int");
@@ -44,7 +44,7 @@ namespace Jap.Services.ShoppingCartAPI.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("CartDetails", (string)null);
+                    b.ToTable("CartDetails");
                 });
 
             modelBuilder.Entity("Jap.Services.ShoppingCartAPI.Models.CartHeader", b =>
@@ -53,7 +53,7 @@ namespace Jap.Services.ShoppingCartAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartHeaderId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartHeaderId"), 1L, 1);
 
                     b.Property<string>("CouponCode")
                         .IsRequired()
@@ -65,7 +65,7 @@ namespace Jap.Services.ShoppingCartAPI.Migrations
 
                     b.HasKey("CartHeaderId");
 
-                    b.ToTable("CartHeaders", (string)null);
+                    b.ToTable("CartHeaders");
                 });
 
             modelBuilder.Entity("Jap.Services.ShoppingCartAPI.Models.Product", b =>
@@ -94,7 +94,7 @@ namespace Jap.Services.ShoppingCartAPI.Migrations
 
                     b.HasKey("ProductId");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("Jap.Services.ShoppingCartAPI.Models.CartDetails", b =>

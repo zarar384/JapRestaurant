@@ -36,19 +36,18 @@ namespace Jap.Web.Services
                 //clear
                 client.DefaultRequestHeaders.Clear();
 
-                //serializing data from API Request
-                if (apiRequest.Data != null)
-                {
-                    message.Content = new StringContent(JsonConvert.SerializeObject(apiRequest.Data),
-                        Encoding.UTF8, "application/json");
-                }
-
                 //get access token
                 if (!string.IsNullOrEmpty(apiRequest.AccessToken))
                 {
                     client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiRequest.AccessToken);
                 }
 
+                //serializing data from API Request
+                if (apiRequest != null)
+                {
+                    message.Content = new StringContent(JsonConvert.SerializeObject(apiRequest.Data), 
+                        Encoding.UTF8, "application/json");
+                }
                 //getting a response from the client
                 HttpResponseMessage apiResponse = null;
                 switch (apiRequest.ApiType)
@@ -68,19 +67,10 @@ namespace Jap.Web.Services
                 }
                 //request to the client and create an API request
                 apiResponse = await client.SendAsync(message);
-
                 //read like string.
                 var apiContent = await apiResponse.Content.ReadAsStringAsync();
-
-                try
-                {
-                    var apiResponseDto = JsonConvert.DeserializeObject<T>(apiContent);
-                    return apiResponseDto;
-                }
-                catch(JsonReaderException ex)
-                {
-                    throw new Exception(string.Format($"{apiContent} - {ex.Message}"));
-                }
+                var apiResponseDto = JsonConvert.DeserializeObject<T>(apiContent);
+                return apiResponseDto;
             }
             catch (Exception ex)
             {

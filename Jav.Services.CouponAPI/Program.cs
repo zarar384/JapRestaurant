@@ -25,7 +25,7 @@ builder.Services.AddControllers();
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
     {
-        options.Authority = "https://localhost:5001/";
+        options.Authority = "https://localhost:7158/";
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateAudience = false,
@@ -37,7 +37,7 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("ApiScope", policy =>
     {
         policy.RequireAuthenticatedUser();
-        policy.RequireClaim("scope", "jap-client");
+        policy.RequireClaim("scope", "jap");
     });
 });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

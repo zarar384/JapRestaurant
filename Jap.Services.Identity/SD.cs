@@ -21,7 +21,7 @@ namespace Jap.Services.Identity
         //identify resources. Where the client wants to access
         public static IEnumerable<ApiScope> ApiScopes =>
             new List<ApiScope> {
-                new ApiScope("jap-client", "Jap Server"),
+                new ApiScope("jap", "Jap Server"),
                 new ApiScope(name:"read", displayName:"Read your data."),
                 new ApiScope(name:"write", displayName:"Write your data."),
                 new ApiScope(name:"delete", displayName:"Delete your data.")
@@ -43,20 +43,20 @@ namespace Jap.Services.Identity
                 //new client
                 new Client
                 {
-                    ClientId = "jap-client",
-                    ClientSecrets= { new Secret("secret".Sha256())},
+                    ClientId = "jap",
+                    ClientSecrets={new Secret("secret".Sha512())},
                     AllowedGrantTypes = GrantTypes.Code,
                     //url main app. signin-oidc - needed for OpenId Connect
-                    RedirectUris={ "https://localhost:7171/signin-oidc", "https://localhost:44356/signin-oidc" },
+                    RedirectUris={ "https://localhost:44356/signin-oidc" },
                     //where to pass the implementation of the code after successfully logging out of the account
-                    PostLogoutRedirectUris={ "https://localhost:7171/signout-callback-oidc", "https://localhost:44356/signout-callback-oidc" },
+                    PostLogoutRedirectUris={ "https://localhost:44356/signout-callback-oidc" },
                     //scope permissions
                     AllowedScopes = new List<string>
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         IdentityServerConstants.StandardScopes.Email,
-                        "jap-client"
+                        "jap"
                     }
                 },
             };

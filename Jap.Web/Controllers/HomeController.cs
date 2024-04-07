@@ -1,8 +1,6 @@
 ﻿using Jap.Web.Models;
 using Jap.Web.Services.IServices;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -16,8 +14,7 @@ namespace Jap.Web.Controllers
         private readonly IProductService _productService;
         private readonly ICartService _cartService;
 
-        public HomeController(ILogger<HomeController> logger, 
-            IProductService productService,
+        public HomeController(ILogger<HomeController> logger, IProductService productService,
             ICartService cartService)
         {
             _logger = logger;
@@ -30,12 +27,11 @@ namespace Jap.Web.Controllers
             //var UserId = User.Claims.Where(u => u.Type == "sub")?.FirstOrDefault()?.Value;
 
             List<ProductDto> list = new();
-            var response = await _productService?.GetAllProductAsync<ResponseDto>("");
+            var response = await _productService.GetAllProductAsync<ResponseDto>("");
             if (response != null && response.IsSuccess)
             {
                 list = JsonConvert.DeserializeObject<List<ProductDto>>(Convert.ToString(response.Result));
             }
-
             return View(list);
         }
 
@@ -103,12 +99,13 @@ namespace Jap.Web.Controllers
         [Authorize]
         public async Task<IActionResult> Login()
         {
+
             return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Logout()
         {
-            return SignOut(CookieAuthenticationDefaults.AuthenticationScheme, OpenIdConnectDefaults.AuthenticationScheme);
+            return SignOut("Cookies", "oidc");
         }
 
     }
