@@ -56,18 +56,22 @@ namespace Jap.Web.Controllers
         [Authorize]
         public async Task<IActionResult> DetailsPost(ProductDto productDto)
         {
-            CartDto cartDto = new()
+            var userId = User.Claims.Where(u => u.Type == "sub")?.FirstOrDefault()?.Value;
+
+            var cartHeaderDto = new CartHeaderDto
             {
-                CartHeader = new CartHeaderDto
-                {
-                    UserId = User.Claims.Where(u => u.Type == "sub")?.FirstOrDefault()?.Value
-                }
+                UserId = userId,
             };
+
+            var cartDto = new CartDto();
+            cartDto.CartHeader = cartHeaderDto;
 
             CartDetailsDto cartDetails = new CartDetailsDto()
             {
                 Count = productDto.Count,
-                ProductId = productDto.ProductId
+                ProductId = productDto.ProductId,
+                CartHeader = cartHeaderDto,
+                CartHeaderId = cartHeaderDto.CartHeaderId,
             };
 
             var resp = await _productService.GetProductByIdAsync<ResponseDto>(productDto.ProductId, "");

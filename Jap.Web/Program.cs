@@ -59,15 +59,6 @@ builder.Services.AddAuthentication(options =>
         //options.RequireHttpsMetadata = true;
         options.UseTokenLifetime = false;
         options.SaveTokens = true;
-
-        options.Events = new OpenIdConnectEvents
-        {
-            OnRedirectToIdentityProviderForSignOut = context =>
-            {
-                context.ProtocolMessage.PostLogoutRedirectUri = "https://localhost:7171/signout-callback-oidc"; // Убедитесь, что это абсолютный URI
-                return Task.CompletedTask;
-            }
-        };
     });
 
 var app = builder.Build();
