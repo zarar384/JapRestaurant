@@ -365,3 +365,5 @@ FodyWeavers.xsd
 /Jap.Services.ShoppongCartAPI/appsettings.json
 /Jap.Services.ProductAPI/appsettings.json
 /Jap.Services.Identity/appsettings.json
+/Jap.Services.Identity/.env
+/Jap.Services.Identity/keys/is-signing-key-311393E882ED438C6BC9DA95C518F9CA.json
