@@ -10,13 +10,22 @@ namespace Jap.Web.Controllers
     {
         private readonly IProductService _productService;
         private readonly ICartService _cartService;
-        public CartController(IProductService productService, ICartService cartService)
+        private readonly ICouponService _couponService;
+
+        public CartController(IProductService productService, ICartService cartService , ICouponService couponService)
         {
             _productService = productService;
             _cartService = cartService;
+            _couponService = couponService;
         }
 
         public async Task<IActionResult> CartIndex()
+        {
+            return View(await LoadCartDtoBasedOnLoggedInUser());
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Checkout()
         {
             return View(await LoadCartDtoBasedOnLoggedInUser());
         }
@@ -79,10 +88,23 @@ namespace Jap.Web.Controllers
             
             if(cartDto.CartHeader != null)
             {
+                if (!string.IsNullOrEmpty(cartDto.CartHeader.CouponCode))
+                {
+                    var coupon  = await _couponService.GetCouponAsnyc<ResponseDto>(cartDto.CartHeader.CouponCode, accessToken);
+
+                    if (coupon != null && coupon.IsSuccess)
+                    {
+                        var couponDto = JsonConvert.DeserializeObject<CouponDto>(Convert.ToString(coupon.Result));
+                        cartDto.CartHeader.DiscountTotal = couponDto.DiscountAmount;
+                    }
+                }
+
                 foreach(var detail in cartDto.CartDetails)
                 {
                     cartDto.CartHeader.OrderTotal += (detail.Product.Price * detail.Count);
                 }
+
+                cartDto.CartHeader.OrderTotal -= cartDto.CartHeader.DiscountTotal;
             }
             return cartDto;
         }
