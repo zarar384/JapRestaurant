@@ -1,8 +1,9 @@
-﻿using Jap.Services.ShoppingCartAPI.Models.Dto;
+﻿using Jap.MessageBus;
+using Jap.Services.ShoppingCartAPI.Models.Dto;
 
 namespace Jap.Services.ShoppingCartAPI.Messages
 {
-    public class CheckoutHeaderDto
+    public class CheckoutHeaderDto: BaseMassage
     {
         public int CartHeaderId { get; set; }
         public string UserId { get; set; }

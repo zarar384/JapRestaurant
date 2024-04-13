@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Net;
+using Jap.MessageBus;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -19,6 +20,9 @@ builder.Services.AddSingleton(mapper);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 // Add Repositories
 builder.Services.AddScoped<ICartRepository, CartRepository>();
+// Add Integrations
+var azureConnectionString = builder.Configuration.GetConnectionString("AzureConnection");
+builder.Services.AddSingleton<IMessageBus>(new AzureServiceBusMessageBus(azureConnectionString));
 builder.Services.AddControllers();
 
 //Authentication Bearer token

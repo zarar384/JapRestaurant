@@ -1,4 +1,5 @@
-﻿using Jap.Services.ShoppingCartAPI.Messages;
+﻿using Jap.MessageBus;
+using Jap.Services.ShoppingCartAPI.Messages;
 using Jap.Services.ShoppingCartAPI.Models.Dto;
 using Jap.Services.ShoppingCartAPI.Repository;
 using Microsoft.AspNetCore.Mvc;
@@ -10,12 +11,16 @@ namespace Jap.Services.ShoppingCartAPI.Controllers
     [Route("api/cart")]
     public class CartAPIController : Controller
     {
+        private readonly IConfiguration _configuration;
         private readonly ICartRepository _cartRepository;
+        private readonly IMessageBus _messageBus;
         protected ResponseDto _response;
 
-        public CartAPIController(ICartRepository cartRepository)
+        public CartAPIController(ICartRepository cartRepository, IConfiguration configuration, IMessageBus messageBus)
         {
+            _messageBus = messageBus;
             _cartRepository = cartRepository;
+            _configuration = configuration;
             this._response = new ResponseDto();
         }
 
@@ -128,6 +133,14 @@ namespace Jap.Services.ShoppingCartAPI.Controllers
                 }
 
                 checkoutHeaderDto.CartDetails = cartDto.CartDetails;
+
+                var checkoutSetting = _configuration.GetSection("AzureServiceBus:CheckoutTopic");
+
+                if (checkoutSetting != null && !string.IsNullOrWhiteSpace(checkoutSetting.Value))
+                {
+                    //sending message
+                    await _messageBus.PublishMessage(checkoutHeaderDto, checkoutSetting.Value);
+                }
             }
             catch (Exception ex)
             {
