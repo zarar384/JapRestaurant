@@ -1,4 +1,5 @@
-﻿using Jap.Services.ShoppingCartAPI.Models.Dto;
+﻿using Jap.Services.ShoppingCartAPI.Messages;
+using Jap.Services.ShoppingCartAPI.Models.Dto;
 using Jap.Services.ShoppingCartAPI.Repository;
 using Microsoft.AspNetCore.Mvc;
 
@@ -97,6 +98,7 @@ namespace Jap.Services.ShoppingCartAPI.Controllers
             }
             return _response;
         }
+
         [HttpPost("RemoveCoupon")]
         public async Task<object> RemoveCoupon([FromBody] string userId)
         {
@@ -106,6 +108,28 @@ namespace Jap.Services.ShoppingCartAPI.Controllers
                 _response.Result = isSuccess;
             }
             catch(Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.ErrorMessages = new List<string> { ex.ToString() };
+            }
+            return _response;
+        }
+
+        [HttpPost("Checkout")]
+        public async Task<object> RemoveCoupon(CheckoutHeaderDto checkoutHeaderDto)
+        {
+            try
+            {
+                CartDto cartDto = await _cartRepository.GetCartByUserId(checkoutHeaderDto.UserId);
+
+                if (cartDto == null)
+                {
+                    return BadRequest();
+                }
+
+                checkoutHeaderDto.CartDetails = cartDto.CartDetails;
+            }
+            catch (Exception ex)
             {
                 _response.IsSuccess = false;
                 _response.ErrorMessages = new List<string> { ex.ToString() };
