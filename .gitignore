@@ -361,13 +361,19 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-/Jav.Services.CouponAPI/appsettings.json
+/Jap.Services.CouponAPI/appsettings.json
+/Jav.Services.CouponAPI/Migrations/
 /Jap.Services.ShoppongCartAPI/appsettings.json
 /Jap.Services.ProductAPI/appsettings.json
 /Jap.Services.Identity/appsettings.json
+/Jap.Services.OrderAPI/appsettings.json
 /Jap.Services.Identity/.env
 /Jap.Services.Identity/keys/
 /Jap.Services.Identity/tempkey.jwk
 /Jap.Services.ShoppongCartAPI/Migrations/
-/Jav.Services.CouponAPI/Migrations/
-/Jav.Services.ProductAPI/Migrations/
+/Jap.Services.CouponAPI/Migrations/
+/Jap.Services.ProductAPI/Migrations/
+/Jap.Services.OrderAPI/Migrations/
+/OrderAPI/Migrations/
+/OrderAPI/appsettings.json
+*.json
