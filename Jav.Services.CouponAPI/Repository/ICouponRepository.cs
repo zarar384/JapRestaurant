@@ -1,6 +1,6 @@
-﻿using Jav.Services.CouponAPI.Models.Dto;
+﻿using Jap.Services.CouponAPI.Models.Dto;
 
-namespace Jav.Services.CouponAPI.Repository
+namespace Jap.Services.CouponAPI.Repository
 {
     public interface ICouponRepository
     {

@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using Jav.Services.CouponAPI.Models;
-using Jav.Services.CouponAPI.Models.Dto;
+using Jap.Services.CouponAPI.Models;
+using Jap.Services.CouponAPI.Models.Dto;
 
-namespace Jav.Services.CouponAPI
+namespace Jap.Services.CouponAPI
 {
     public class MappingConfig
     {

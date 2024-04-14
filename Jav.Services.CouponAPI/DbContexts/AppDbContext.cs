@@ -1,7 +1,7 @@
-﻿using Jav.Services.CouponAPI.Models;
+﻿using Jap.Services.CouponAPI.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Jav.Services.CouponAPI.DbContexts
+namespace Jap.Services.CouponAPI.DbContexts
 {
     public class AppDbContext : DbContext
     {

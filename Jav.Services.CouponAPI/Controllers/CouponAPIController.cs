@@ -1,8 +1,8 @@
-﻿using Jav.Services.CouponAPI.Models.Dto;
-using Jav.Services.CouponAPI.Repository;
+﻿using Jap.Services.CouponAPI.Models.Dto;
+using Jap.Services.CouponAPI.Repository;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Jav.Services.CouponAPI.Controllers
+namespace Jap.Services.CouponAPI.Controllers
 {
     [ApiController]
     [Route("api/coupon")]

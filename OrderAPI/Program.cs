@@ -1,27 +1,17 @@
-
-using AutoMapper;
-using Jap.Services.ShoppingCartAPI.Repository;
-using Jap.Services.ShoppingCartAPI.DbContexts;
+using Jap.Services.OrderAPI.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Jap.MessageBus;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-// Add services to the container.
+
 // Add Connection String
 builder.Services.AddDbContext<AppDbContext>(option =>
 option.UseSqlServer(connectionString));
-// Add AutoMapper
-IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
-builder.Services.AddSingleton(mapper);
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-// Add Repositories
-builder.Services.AddScoped<ICartRepository, CartRepository>();
-// Add Integrations
-var azureConnectionString = builder.Configuration.GetConnectionString("AzureConnection");
-builder.Services.AddSingleton<IMessageBus>(new AzureServiceBusMessageBus(azureConnectionString));
+
+// Add services to the container.
+
 builder.Services.AddControllers();
 
 //Authentication Bearer token
@@ -43,6 +33,7 @@ builder.Services.AddAuthorization(options =>
         policy.RequireClaim("scope", "jap-client");
     });
 });
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -83,13 +74,11 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    //app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
-app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();

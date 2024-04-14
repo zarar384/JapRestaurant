@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Jav.Services.CouponAPI": {
+    "Jap.Services.CouponAPI": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

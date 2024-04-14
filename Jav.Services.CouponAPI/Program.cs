@@ -1,7 +1,7 @@
 using AutoMapper;
-using Jav.Services.CouponAPI;
-using Jav.Services.CouponAPI.DbContexts;
-using Jav.Services.CouponAPI.Repository;
+using Jap.Services.CouponAPI;
+using Jap.Services.CouponAPI.DbContexts;
+using Jap.Services.CouponAPI.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;

@@ -1,4 +1,4 @@
-﻿namespace Jav.Services.CouponAPI.Models.Dto
+﻿namespace Jap.Services.CouponAPI.Models.Dto
 {
     public class CouponDto
     {

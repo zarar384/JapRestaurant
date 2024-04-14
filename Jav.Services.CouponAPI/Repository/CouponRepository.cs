@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using Jav.Services.CouponAPI.DbContexts;
-using Jav.Services.CouponAPI.Models.Dto;
+using Jap.Services.CouponAPI.DbContexts;
+using Jap.Services.CouponAPI.Models.Dto;
 using Microsoft.EntityFrameworkCore;
 
-namespace Jav.Services.CouponAPI.Repository
+namespace Jap.Services.CouponAPI.Repository
 {
     public class CouponRepository : ICouponRepository
     {
