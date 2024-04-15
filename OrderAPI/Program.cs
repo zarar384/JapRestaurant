@@ -1,4 +1,5 @@
 using Jap.Services.OrderAPI.DbContexts;
+using Jap.Services.OrderAPI.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -11,6 +12,9 @@ builder.Services.AddDbContext<AppDbContext>(option =>
 option.UseSqlServer(connectionString));
 
 // Add services to the container.
+var optionBuilder = new DbContextOptionsBuilder<AppDbContext>();
+optionBuilder.UseSqlServer(connectionString);
+builder.Services.AddSingleton(new OrderRepository(optionBuilder.Options));
 
 builder.Services.AddControllers();
 

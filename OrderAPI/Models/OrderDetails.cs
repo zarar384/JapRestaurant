@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OrderAPI.Models
+namespace Jap.Services.OrderAPI.Models
 {
     public class OrderDetails
     {

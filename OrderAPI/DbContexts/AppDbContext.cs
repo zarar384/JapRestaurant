@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using OrderAPI.Models;
+﻿using Jap.Services.OrderAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Jap.Services.OrderAPI.DbContexts
 {
