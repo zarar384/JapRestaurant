@@ -1,4 +1,6 @@
 using Jap.Services.OrderAPI.DbContexts;
+using Jap.Services.OrderAPI.Extension;
+using Jap.Services.OrderAPI.Messaging;
 using Jap.Services.OrderAPI.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -15,6 +17,7 @@ option.UseSqlServer(connectionString));
 var optionBuilder = new DbContextOptionsBuilder<AppDbContext>();
 optionBuilder.UseSqlServer(connectionString);
 builder.Services.AddSingleton(new OrderRepository(optionBuilder.Options));
+builder.Services.AddSingleton<IAzureServiceBusConsumer, AzureServiceBusConsumer>();
 
 builder.Services.AddControllers();
 
@@ -88,5 +91,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseAzureServiceBusConsumer();
 
 app.Run();
