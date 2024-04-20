@@ -17,8 +17,14 @@ option.UseSqlServer(connectionString));
 IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
 builder.Services.AddSingleton(mapper);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 // Add Repositories
 builder.Services.AddScoped<ICartRepository, CartRepository>();
+builder.Services.AddScoped<ICouponRepository, CouponRepository>();
+
+//HTTP
+builder.Services.AddHttpClient<ICouponRepository, CouponRepository>(u => u.BaseAddress = new Uri(builder.Configuration["CouponAPI"]));
+
 // Add Integrations
 var azureConnectionString = builder.Configuration.GetConnectionString("AzureConnection");
 builder.Services.AddSingleton<IMessageBus>(new AzureServiceBusMessageBus(azureConnectionString));

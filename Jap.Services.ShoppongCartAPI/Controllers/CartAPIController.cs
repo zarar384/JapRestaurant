@@ -13,12 +13,15 @@ namespace Jap.Services.ShoppingCartAPI.Controllers
     {
         private readonly IConfiguration _configuration;
         private readonly ICartRepository _cartRepository;
+        private readonly ICouponRepository _couponRepository;
         private readonly IMessageBus _messageBus;
         protected ResponseDto _response;
 
-        public CartAPIController(ICartRepository cartRepository, IConfiguration configuration, IMessageBus messageBus)
+        public CartAPIController(ICartRepository cartRepository, ICouponRepository couponRepository, 
+            IConfiguration configuration, IMessageBus messageBus)
         {
             _messageBus = messageBus;
+            _couponRepository = couponRepository;
             _cartRepository = cartRepository;
             _configuration = configuration;
             this._response = new ResponseDto();
@@ -121,7 +124,7 @@ namespace Jap.Services.ShoppingCartAPI.Controllers
         }
 
         [HttpPost("Checkout")]
-        public async Task<object> RemoveCoupon(CheckoutHeaderDto checkoutHeaderDto)
+        public async Task<object> Checkout(CheckoutHeaderDto checkoutHeaderDto)
         {
             try
             {
@@ -130,6 +133,19 @@ namespace Jap.Services.ShoppingCartAPI.Controllers
                 if (cartDto == null)
                 {
                     return BadRequest();
+                }
+
+                if (!string.IsNullOrEmpty(checkoutHeaderDto.CouponCode))
+                {
+                    CouponDto coupon = await _couponRepository.GetCoupon(checkoutHeaderDto.CouponCode);
+
+                    if(checkoutHeaderDto.DiscountTotal != coupon.DiscountAmount)
+                    {
+                        _response.IsSuccess = false;
+                        _response.ErrorMessages = new List<string>() { "Coupon price has been changed" };
+                        _response.DisplayMessage = "Coupon price has been changed";
+                        return _response;
+                    }
                 }
 
                 checkoutHeaderDto.CartDetails = cartDto.CartDetails;
