@@ -1,3 +1,4 @@
+using Jap.MessageBus;
 using Jap.Services.OrderAPI.DbContexts;
 using Jap.Services.OrderAPI.Extension;
 using Jap.Services.OrderAPI.Messaging;
@@ -18,6 +19,7 @@ var optionBuilder = new DbContextOptionsBuilder<AppDbContext>();
 optionBuilder.UseSqlServer(connectionString);
 builder.Services.AddSingleton(new OrderRepository(optionBuilder.Options));
 builder.Services.AddSingleton<IAzureServiceBusConsumer, AzureServiceBusConsumer>();
+builder.Services.AddSingleton<IMessageBus, AzureServiceBusMessageBus>();
 
 builder.Services.AddControllers();
 

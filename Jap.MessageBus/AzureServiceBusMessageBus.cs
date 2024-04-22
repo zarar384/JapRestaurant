@@ -13,7 +13,7 @@ namespace Jap.MessageBus
             _connectionString = connectionString;
         }
 
-        public async Task PublishMessage(BaseMassage massage, string topicName)
+        public async Task PublishMessage(BaseMessage massage, string topicName)
         {
             if (_connectionString == null && string.IsNullOrEmpty(_connectionString)) return;
 

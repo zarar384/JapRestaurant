@@ -3,7 +3,7 @@ using Jap.Services.ShoppingCartAPI.Models.Dto;
 
 namespace Jap.Services.ShoppingCartAPI.Messages
 {
-    public class CheckoutHeaderDto: BaseMassage
+    public class CheckoutHeaderDto: BaseMessage
     {
         public int CartHeaderId { get; set; }
         public string UserId { get; set; }

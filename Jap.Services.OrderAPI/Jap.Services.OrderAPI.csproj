@@ -31,4 +31,8 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Jap.MessageBus\Jap.MessageBus.csproj" />
+  </ItemGroup>
+
 </Project>

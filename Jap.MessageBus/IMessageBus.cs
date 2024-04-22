@@ -2,6 +2,6 @@
 {
     public interface IMessageBus
     {
-        Task PublishMessage(BaseMassage massage, string topicName);
+        Task PublishMessage(BaseMessage massage, string topicName);
     }
 }

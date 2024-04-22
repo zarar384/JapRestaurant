@@ -1,0 +1,6 @@
+# @Jap.Services.PaymentAPI_HostAddress = http://localhost:5263
+
+# GET {{Jap.Services.PaymentAPI_HostAddress}}/weatherforecast/
+# Accept: application/json
+
+###

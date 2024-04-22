@@ -6,7 +6,7 @@ using Jap.Services.OrderAPI.Repository;
 using Newtonsoft.Json;
 using System.Text;
 
-namespace Jap.Services.OrderAPI.Messaging
+namespace Jap.Services.PaymentAPI.Messaging
 {
     public class AzureServiceBusConsumer : IAzureServiceBusConsumer
     {
