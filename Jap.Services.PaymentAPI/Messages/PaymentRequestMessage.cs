@@ -3,7 +3,7 @@ using Jap.MessageBus;
 
 namespace Jap.Services.PaymentAPI.Messages
 {
-    public class PaymentRequestMessages: BaseMessage
+    public class PaymentRequestMessage: BaseMessage
     {
         public int OrderId { get; set; }
         public string Name { get; set; }

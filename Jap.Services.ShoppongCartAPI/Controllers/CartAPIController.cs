@@ -157,6 +157,8 @@ namespace Jap.Services.ShoppingCartAPI.Controllers
                     //sending message
                     await _messageBus.PublishMessage(checkoutHeaderDto, checkoutSetting.Value);
                 }
+
+                await _cartRepository.ClearCart(checkoutHeaderDto.UserId);
             }
             catch (Exception ex)
             {

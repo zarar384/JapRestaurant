@@ -14,8 +14,11 @@ namespace Jap.Services.OrderAPI.Messaging
         private readonly string _subscriptionCheckOut;
         private readonly string _checkoutMessageTopic;
         private readonly string _orderPaymentProcessTopic;
+        private readonly string _orderUpdatePaymentResultTopic;
 
         private ServiceBusProcessor _checkoutProcessor;
+        private ServiceBusProcessor _orderUpdatePaymentStatusProcessor;
+
         private readonly IConfiguration _configuration;
         private readonly IMessageBus _messageBus;
 
@@ -31,11 +34,14 @@ namespace Jap.Services.OrderAPI.Messaging
             _subscriptionCheckOut = _configuration.GetValue<string>("SubscriptionCheckOut");
             _checkoutMessageTopic = _configuration.GetValue<string>("CheckoutMessageTopic");
             _orderPaymentProcessTopic = _configuration.GetValue<string>("OrderPaymentProcessTopic");
+            _orderUpdatePaymentResultTopic = _configuration.GetValue<string>("OrderUpdatePaymentResultTopic");
 
             if (_azureServiceBusConnection == null)
             {
                 var client = new ServiceBusClient(_azureServiceBusConnection);
                 _checkoutProcessor = client.CreateProcessor(_checkoutMessageTopic, _subscriptionCheckOut);
+                _orderUpdatePaymentStatusProcessor = client.CreateProcessor(_orderUpdatePaymentResultTopic, _subscriptionCheckOut);
+
             }
         }
 
@@ -46,6 +52,10 @@ namespace Jap.Services.OrderAPI.Messaging
                 _checkoutProcessor.ProcessMessageAsync += OnCheckOutMessageReceived;
                 _checkoutProcessor.ProcessErrorAsync += ErrorHandler;
                 await _checkoutProcessor.StartProcessingAsync();
+
+                _orderUpdatePaymentStatusProcessor.ProcessMessageAsync += OnOrderPaymentUpdateReceived;
+                _orderUpdatePaymentStatusProcessor.ProcessErrorAsync += ErrorHandler;
+                await _orderUpdatePaymentStatusProcessor.StartProcessingAsync();
             }
         }
 
@@ -55,6 +65,9 @@ namespace Jap.Services.OrderAPI.Messaging
             {
                 await _checkoutProcessor.StopProcessingAsync();
                 await _checkoutProcessor.DisposeAsync();
+
+                await _orderUpdatePaymentStatusProcessor.StopProcessingAsync();
+                await _orderUpdatePaymentStatusProcessor.DisposeAsync();
             }
         }
 
@@ -130,6 +143,21 @@ namespace Jap.Services.OrderAPI.Messaging
                 {
                     throw new Exception(ex.Message);
                 }
+            }
+        }
+
+        private async Task OnOrderPaymentUpdateReceived(ProcessMessageEventArgs args)
+        {
+            var message = args.Message;
+
+            if (message == null)
+            {
+                var body = Encoding.UTF8.GetString(message.Body);
+
+                UpdatePaymentResultMessage paymentResultMessage = JsonConvert.DeserializeObject<UpdatePaymentResultMessage>(body);
+
+                await _orderRepository.UpdateOrderPaymentStatus(paymentResultMessage.OrderId, paymentResultMessage.Status);
+                await args.CompleteMessageAsync(args.Message);
             }
         }
     }
