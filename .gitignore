@@ -374,7 +374,7 @@ FodyWeavers.xsd
 /Jap.Services.CouponAPI/Migrations/
 /Jap.Services.ProductAPI/Migrations/
 /Jap.Services.OrderAPI/Migrations/
+/Jap.Services.Email/Migrations/
 /OrderAPI/Migrations/
 /OrderAPI/appsettings.json
 *.json
-/Jap.Services.Email/Migrations

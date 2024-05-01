@@ -150,7 +150,7 @@ namespace Jap.Services.ShoppingCartAPI.Controllers
 
                 checkoutHeaderDto.CartDetails = cartDto.CartDetails;
 
-                var checkoutSetting = _configuration.GetSection("AzureServiceBus:CheckoutTopic");
+                var checkoutSetting = _configuration.GetSection("AzureServiceBus:CheckoutQueue");//or CheckoutTopic
 
                 if (checkoutSetting != null && !string.IsNullOrWhiteSpace(checkoutSetting.Value))
                 {

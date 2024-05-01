@@ -39,7 +39,8 @@ namespace Jap.Services.OrderAPI.Messaging
             if (_azureServiceBusConnection == null)
             {
                 var client = new ServiceBusClient(_azureServiceBusConnection);
-                _checkoutProcessor = client.CreateProcessor(_checkoutMessageTopic, _subscriptionCheckOut);
+                //_checkoutProcessor = client.CreateProcessor(_checkoutMessageTopic, _subscriptionCheckOut);
+                _checkoutProcessor = client.CreateProcessor(_checkoutMessageTopic);
                 _orderUpdatePaymentStatusProcessor = client.CreateProcessor(_orderUpdatePaymentResultTopic, _subscriptionCheckOut);
 
             }
@@ -132,6 +133,7 @@ namespace Jap.Services.OrderAPI.Messaging
                     EspiryMonthYear = orderHeader.ExpiryMonthYear,
                     OrderId = orderHeader.OrderHeaderId,
                     OrderTotal = orderHeader.OrderTotal,
+                    Email = orderHeader.Email,
                 };
 
                 try

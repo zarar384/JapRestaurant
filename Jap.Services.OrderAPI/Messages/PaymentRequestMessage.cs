@@ -11,5 +11,6 @@ namespace Jap.Services.OrderAPI.Messages
         public string CVV { get; set; }
         public string EspiryMonthYear { get; set; }
         public double? OrderTotal { get; set; }
+        public string Email { get; set; }
     }
 }

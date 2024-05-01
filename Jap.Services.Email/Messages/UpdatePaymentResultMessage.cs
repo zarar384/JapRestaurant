@@ -1,6 +1,6 @@
 ﻿using Jap.MessageBus;
 
-namespace Jap.Services.OrderAPI.Messages
+namespace Jap.Services.EmailAPI.Messages
 {
     public class UpdatePaymentResultMessage:BaseMessage
     {

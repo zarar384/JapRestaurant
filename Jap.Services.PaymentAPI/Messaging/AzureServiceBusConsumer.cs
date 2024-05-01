@@ -80,7 +80,8 @@ namespace Jap.Services.PaymentAPI.Messaging
                 UpdatePaymentResultMessage updatePaymentResultMessage = new()
                 {
                     Status = result,
-                    OrderId = paymentReqMessage.OrderId
+                    OrderId = paymentReqMessage.OrderId,
+                    Email = paymentReqMessage.Email,
                 };
 
                 try

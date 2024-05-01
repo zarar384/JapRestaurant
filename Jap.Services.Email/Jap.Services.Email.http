@@ -1,0 +1,6 @@
+# @Jap.Services.EmailAPI_HostAddress = http://localhost:5038
+
+# GET {{Jap.Services.EmailAPI_HostAddress}}/weatherforecast/
+# Accept: application/json
+
+# ###
