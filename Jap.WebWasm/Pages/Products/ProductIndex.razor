@@ -1,0 +1,65 @@
+@page "/products"
+@attribute [Authorize]
+@inject IProductService ProductService
+@inject NavigationManager Navigation
+
+<PageTitle>Products List</PageTitle>
+
+<br /><br />
+<div class="container p-4 border">
+    <div class="row pb-2">
+        <div class="col">
+            <h1 class="text-primary">Products List</h1>
+        </div>
+        <div class="col text-end pt-1">
+            <a href="products/create" class="btn btn-outline-primary">
+                <i class="fas fa-plus"></i> Create New Product
+            </a>
+        </div>
+    </div>
+
+    @if (products == null)
+    {
+        <p>Loading…</p>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in products)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.CategoryName</td>
+                        <td>@item.Price.ToString("C")</td>
+                        <td>
+                            <a href="products/edit/@item.ProductId" class="btn btn-success">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="products/delete/@item.ProductId" class="btn btn-danger">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+
+@code {
+    private List<ProductDto>? products;
+
+    protected override async Task OnInitializedAsync()
+    {
+        products = await ProductService.GetAllProductAsync() ?? new();
+    }
+}

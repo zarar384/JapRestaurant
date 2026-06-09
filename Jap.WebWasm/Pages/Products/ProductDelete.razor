@@ -1,0 +1,99 @@
+@page "/products/delete/{ProductId:int}"
+@attribute [Authorize(Roles = "Admin")]
+@inject IProductService ProductService
+@inject NavigationManager Navigation
+
+<PageTitle>Delete Product</PageTitle>
+
+@if (product == null)
+{
+    <p>Loading…</p>
+}
+else
+{
+    <EditForm Model="product" OnValidSubmit="HandleDelete">
+        <br />
+        <div class="container border p-3">
+            <h1 class="text-info">Delete Product</h1>
+            <hr />
+            <div class="row">
+
+                <div class="col-2">
+                    <label class="control-label pt-2" style="font-size:20px;">Name</label>
+                </div>
+                <div class="col-10 pb-3">
+                    <InputText @bind-Value="product.Name" class="form-control" disabled />
+                </div>
+
+                <div class="col-2">
+                    <label class="control-label pt-2" style="font-size:20px;">Category</label>
+                </div>
+                <div class="col-10 pb-3">
+                    <InputText @bind-Value="product.CategoryName" class="form-control" disabled />
+                </div>
+
+                <div class="col-2">
+                    <label class="control-label pt-2" style="font-size:20px;">Description</label>
+                </div>
+                <div class="col-10 pb-3">
+                    <InputTextArea @bind-Value="product.Description" class="form-control" rows="5" disabled />
+                </div>
+
+                <div class="col-2">
+                    <label class="control-label pt-2" style="font-size:20px;">Image URL</label>
+                </div>
+                <div class="col-10 pb-3">
+                    <InputText @bind-Value="product.ImageUrl" class="form-control" disabled />
+                </div>
+
+                <div class="col-2">
+                    <label class="control-label pt-2" style="font-size:20px;">Price</label>
+                </div>
+                <div class="col-10 pb-3">
+                    <InputNumber @bind-Value="product.Price" class="form-control" disabled />
+                </div>
+
+                @if (!string.IsNullOrEmpty(errorMessage))
+                {
+                    <div class="col-12">
+                        <div class="alert alert-danger">@errorMessage</div>
+                    </div>
+                }
+
+                <div class="col-5 offset-2">
+                    <a href="/products" class="btn btn-primary form-control">Back to List</a>
+                </div>
+                <div class="col-5">
+                    <button type="submit" class="btn btn-danger form-control">Delete</button>
+                </div>
+            </div>
+        </div>
+    </EditForm>
+}
+
+@code {
+    [Parameter]
+    public int ProductId { get; set; }
+
+    private ProductDto? product;
+    private string? errorMessage;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        product = await ProductService.GetProductByIdAsync(ProductId);
+    }
+
+    private async Task HandleDelete()
+    {
+        if (product == null) return;
+        var response = await ProductService.DeleteProductAsync(product.ProductId);
+        if (response?.IsSuccess == true)
+        {
+            Navigation.NavigateTo("/products");
+        }
+        else
+        {
+            errorMessage = response?.DisplayMessage ?? "Failed to delete product.";
+        }
+    }
+}

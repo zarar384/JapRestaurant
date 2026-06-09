@@ -1,7 +1,50 @@
 ﻿@page "/"
+@inject IProductService ProductService
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+@if (products == null)
+{
+    <p>Loading products…</p>
+}
+else if (products.Count == 0)
+{
+    <p>No products available.</p>
+}
+else
+{
+    <div class="container row">
+        @foreach (var product in products)
+        {
+            <div class="col-4">
+                <div class="p-0 my-3 border">
+                    <div class="card">
+                        <img src="@product.ImageUrl" class="card-img-top" alt="@product.Name" />
+                        <div class="card-body">
+                            <h3 class="card-title text-success">@product.Name</h3>
+                            <span class="badge badge-light mb-2">@product.CategoryName</span>
+                            <p class="card-text">@((MarkupString)product.Description)</p>
+                            <div class="row">
+                                <div class="col pt-1">
+                                    <span style="font-size:23px;">@product.Price.ToString("C")</span>
+                                </div>
+                                <div class="col">
+                                    <a href="product/@product.ProductId" class="btn btn-success form-control">Details</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
 
-Welcome to your new app.
+@code {
+    private List<ProductDto>? products;
+
+    protected override async Task OnInitializedAsync()
+    {
+        products = await ProductService.GetAllProductAsync() ?? new();
+    }
+}

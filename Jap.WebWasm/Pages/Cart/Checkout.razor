@@ -1,0 +1,166 @@
+@page "/cart/checkout"
+@attribute [Authorize]
+@inject ICartService CartService
+@inject ICouponService CouponService
+@inject AuthenticationStateProvider AuthStateProvider
+@inject NavigationManager Navigation
+
+<PageTitle>Checkout</PageTitle>
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="alert alert-warning" role="alert">@errorMessage</div>
+}
+
+@if (cart == null || !cart.CartDetails.Any())
+{
+    <p>Your cart is empty.</p>
+}
+else
+{
+    <EditForm Model="cart.CartHeader" OnValidSubmit="PlaceOrder">
+        <DataAnnotationsValidator />
+
+        <div>
+            <span style="font-size:25px;" class="text-warning">Enter details and place order:</span><br />
+        </div>
+
+        <div class="border mt-2">
+            <div class="container row">
+                <div class="col-7">
+                    <div class="row">
+                        <div class="col-12">
+                            <label class="col-form-label">First Name:</label>
+                            <InputText @bind-Value="cart.CartHeader.FirstName" class="form-control" />
+                        </div>
+                        <div class="col-12">
+                            <label class="col-form-label">Last Name:</label>
+                            <InputText @bind-Value="cart.CartHeader.LastName" class="form-control" />
+                        </div>
+                        <div class="col-12">
+                            <label class="col-form-label">Email:</label>
+                            <InputText @bind-Value="cart.CartHeader.Email" class="form-control" />
+                        </div>
+                        <div class="col-12">
+                            <label class="col-form-label">Phone:</label>
+                            <InputText @bind-Value="cart.CartHeader.Phone" class="form-control" />
+                        </div>
+                        <div class="col-12">
+                            <label class="col-form-label">Pick Up Time:</label>
+                            <InputDate Type="InputDateType.DateTimeLocal"
+                                       @bind-Value="cart.CartHeader.PickupDateTime"
+                                       class="form-control" />
+                        </div>
+                        <div class="col-12">
+                            <label class="col-form-label">Card Number:</label>
+                            <InputText @bind-Value="cart.CartHeader.CardNumber" class="form-control" />
+                        </div>
+                        <div class="col-12">
+                            <label class="col-form-label">CVV:</label>
+                            <InputText @bind-Value="cart.CartHeader.CVV" class="form-control" />
+                        </div>
+                        <div class="col-12 pb-4">
+                            <label class="col-form-label">Expiry (MMYY):</label>
+                            <InputText placeholder="MMYY"
+                                       @bind-Value="cart.CartHeader.ExpiryMonthYear"
+                                       class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-5">
+                    <div class="card mt-4">
+                        <div class="card-body">
+                            <div class="d-none d-lg-block">
+                                <div class="row text-danger">
+                                    <div class="col-6">Product Details</div>
+                                    <div class="col-3">Price</div>
+                                    <div class="col-3">Count</div>
+                                </div>
+                            </div>
+                            <hr />
+                            @foreach (var item in cart.CartDetails)
+                            {
+                                <div class="row h-100">
+                                    <div class="col-6">
+                                        <span style="font-size:20px">@item.Product?.Name</span>
+                                    </div>
+                                    <div class="col-3" style="font-size:11px;">
+                                        <span style="font-size:17px;">$@item.Product?.Price</span>
+                                    </div>
+                                    <div class="col-3" style="font-size:11px;">
+                                        <span style="font-size:17px;">@item.Count</span>
+                                    </div>
+                                </div>
+                                <hr />
+                            }
+                            <div class="row">
+                                <div class="col-12 text-right pr-4 text-danger">
+                                    Order Total: @cart.CartHeader.OrderTotal.ToString("C")<br />
+                                    @if (cart.CartHeader.DiscountTotal > 0)
+                                    {
+                                        <span class="text-success">
+                                            Order Discount: @cart.CartHeader.DiscountTotal.ToString("C")
+                                        </span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="row">
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-success form-control">
+                                        Place Order
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </EditForm>
+}
+
+@code {
+    private CartDto? cart;
+    private string? errorMessage;
+    private string userId = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+        userId = authState.User.FindFirst("sub")?.Value ?? string.Empty;
+
+        cart = await CartService.GetCartByUserIdAsync(userId);
+        if (cart?.CartHeader != null)
+        {
+            if (!string.IsNullOrEmpty(cart.CartHeader.CouponCode))
+            {
+                var coupon = await CouponService.GetCouponAsync(cart.CartHeader.CouponCode);
+                if (coupon != null)
+                    cart.CartHeader.DiscountTotal = coupon.DiscountAmount;
+            }
+
+            foreach (var detail in cart.CartDetails)
+                cart.CartHeader.OrderTotal += detail.Product?.Price * detail.Count ?? 0;
+
+            cart.CartHeader.OrderTotal -= cart.CartHeader.DiscountTotal;
+        }
+    }
+
+    private async Task PlaceOrder()
+    {
+        if (cart?.CartHeader == null) return;
+
+        var response = await CartService.CheckoutAsync(cart.CartHeader);
+        if (response?.IsSuccess == true)
+        {
+            Navigation.NavigateTo("/cart/confirmation");
+        }
+        else
+        {
+            errorMessage = response?.DisplayMessage ?? "Failed to place order. Please try again.";
+        }
+    }
+}

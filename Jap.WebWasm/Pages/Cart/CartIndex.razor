@@ -1,0 +1,178 @@
+@page "/cart"
+@attribute [Authorize]
+@inject ICartService CartService
+@inject ICouponService CouponService
+@inject AuthenticationStateProvider AuthStateProvider
+@inject NavigationManager Navigation
+
+<PageTitle>Shopping Cart</PageTitle>
+
+@if (cart?.CartHeader == null || !cart.CartDetails.Any())
+{
+    <div>
+        <p>Please add items to cart</p>
+    </div>
+}
+else
+{
+    <br />
+    <div class="card border mt-4 container">
+        <div class="card-header bg-dark text-light ml-0 row">
+            <div class="col-6">
+                <i class="fa fa-shopping-cart"></i>&nbsp; Shopping Cart
+            </div>
+            <div class="col-6 text-end">
+                <a href="/" class="btn btn-outline-warning btn-sm">Continue Shopping</a>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="d-none d-lg-block">
+                <div class="row text-info">
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-5">Product Details</div>
+                    <div class="col-lg-2">Price</div>
+                    <div class="col-lg-2">Count</div>
+                    <div class="col-lg-1"></div>
+                </div>
+            </div>
+            <hr />
+            @foreach (var item in cart.CartDetails)
+            {
+                <div class="row h-100">
+                    <div class="col-4 col-md-2 text-center py-2">
+                        <img src="@item.Product?.ImageUrl" class="rounded" width="100%" alt="@item.Product?.Name" />
+                    </div>
+                    <div class="col-8 col-md-5">
+                        <h5>@item.Product?.Name</h5>
+                        <div style="font-size:11px;">@((MarkupString)(item.Product?.Description ?? string.Empty))</div>
+                    </div>
+                    <div class="col-3 col-md-2 pt-md-4" style="font-size:11px;">
+                        <span style="font-size:17px;">@item.Product?.Price.ToString("C")</span>
+                    </div>
+                    <div class="col-3 col-md-2 pt-md-4" style="font-size:11px;">
+                        <span style="font-size:17px;">@item.Count</span>
+                    </div>
+                    <div class="col-2 col-lg-1 p-0 pt-lg-4 text-center">
+                        <button class="btn btn-outline-danger" @onclick="() => RemoveItem(item.CartDetailsId)">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                <hr />
+            }
+
+            <div class="row">
+                <div class="col-6">
+                    @if (string.IsNullOrEmpty(cart.CartHeader.CouponCode))
+                    {
+                        <span>Coupon:</span>
+                        <input @bind="couponInput" class="form-control-sm" />
+                        <button class="btn-success btn-sm" @onclick="ApplyCoupon">Apply</button>
+                    }
+                    else
+                    {
+                        <span>Coupon: <strong>@cart.CartHeader.CouponCode</strong></span>
+                        <button class="btn-danger btn-sm" @onclick="RemoveCoupon">Remove</button>
+                    }
+                </div>
+                <div class="col-6 text-end">
+                    <span class="text-danger" style="font-size:21px;">
+                        Order Total: @cart.CartHeader.OrderTotal.ToString("C")<br />
+                    </span>
+                    @if (cart.CartHeader.DiscountTotal > 0)
+                    {
+                        <span class="text-success">
+                            Order Discount: @cart.CartHeader.DiscountTotal.ToString("C")
+                        </span>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="card-footer row">
+            <div class="col-6 col-md-3 offset-md-6"></div>
+            <div class="col-6 col-md-3">
+                <a href="/cart/checkout" class="btn btn-success form-control">Checkout</a>
+            </div>
+        </div>
+    </div>
+}
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="alert alert-danger mt-2">@errorMessage</div>
+}
+
+@code {
+    private CartDto? cart;
+    private string? couponInput;
+    private string? errorMessage;
+    private string userId = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+        userId = authState.User.FindFirst("sub")?.Value ?? string.Empty;
+        await LoadCart();
+    }
+
+    private async Task LoadCart()
+    {
+        cart = await CartService.GetCartByUserIdAsync(userId);
+        if (cart?.CartHeader != null)
+        {
+            if (!string.IsNullOrEmpty(cart.CartHeader.CouponCode))
+            {
+                var coupon = await CouponService.GetCouponAsync(cart.CartHeader.CouponCode);
+                if (coupon != null)
+                    cart.CartHeader.DiscountTotal = coupon.DiscountAmount;
+            }
+
+            foreach (var detail in cart.CartDetails)
+                cart.CartHeader.OrderTotal += detail.Product?.Price * detail.Count ?? 0;
+
+            cart.CartHeader.OrderTotal -= cart.CartHeader.DiscountTotal;
+        }
+    }
+
+    private async Task RemoveItem(int cartDetailsId)
+    {
+        var response = await CartService.RemoveFromCartAsync(cartDetailsId);
+        if (response?.IsSuccess == true)
+        {
+            await LoadCart();
+        }
+        else
+        {
+            errorMessage = response?.DisplayMessage ?? "Failed to remove item.";
+        }
+    }
+
+    private async Task ApplyCoupon()
+    {
+        if (cart == null || string.IsNullOrEmpty(couponInput)) return;
+        cart.CartHeader.CouponCode = couponInput;
+        var response = await CartService.ApplyCouponAsync(cart);
+        if (response?.IsSuccess == true)
+        {
+            couponInput = null;
+            await LoadCart();
+        }
+        else
+        {
+            errorMessage = response?.DisplayMessage ?? "Failed to apply coupon.";
+        }
+    }
+
+    private async Task RemoveCoupon()
+    {
+        var response = await CartService.RemoveCouponAsync(userId);
+        if (response?.IsSuccess == true)
+        {
+            await LoadCart();
+        }
+        else
+        {
+            errorMessage = response?.DisplayMessage ?? "Failed to remove coupon.";
+        }
+    }
+}

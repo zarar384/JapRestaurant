@@ -1,0 +1,114 @@
+@page "/product/{ProductId:int}"
+@attribute [Authorize]
+@inject IProductService ProductService
+@inject ICartService CartService
+@inject AuthenticationStateProvider AuthStateProvider
+@inject NavigationManager Navigation
+
+<PageTitle>@(product?.Name ?? "Product Details")</PageTitle>
+
+@if (product == null)
+{
+    <p>Loading…</p>
+}
+else
+{
+    <div class="pt-4">
+        <div class="card container" style="border:1px solid #808080;">
+            <div class="card-header bg-dark text-light row" style="border-radius:0px;">
+                <div class="col-12 col-md-6">
+                    <h1 class="text-white">@product.Name</h1>
+                </div>
+                <div class="col-12 col-md-6 text-end">
+                    <h1 class="text-warning">@product.Price.ToString("C")</h1>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="container rounded p-2">
+                    <div class="row">
+                        <div class="col-12 col-lg-4 p-1 text-center">
+                            <img src="@product.ImageUrl" style="border-radius:35px;" width="100%" class="rounded" alt="@product.Name" />
+                        </div>
+                        <div class="col-12 col-lg-8">
+                            <div class="row pl-3">
+                                <div class="col-12">
+                                    <span class="badge badge-primary text-success p-3 border">@product.CategoryName</span>
+                                    <p class="text-secondary">@((MarkupString)product.Description)</p>
+                                </div>
+                            </div>
+                            <div class="row px-4">
+                                <EditForm Model="product" OnValidSubmit="AddToCart">
+                                    <DataAnnotationsValidator />
+                                    <div class="mb-2">
+                                        <InputNumber @bind-Value="product.Count" class="form-control" />
+                                        <ValidationMessage For="@(() => product.Count)" class="text-danger" />
+                                    </div>
+                                    <div class="card-footer row bg-dark mt-3">
+                                        <div class="col-12 col-md-6 pb-1">
+                                            <a href="/" class="btn btn-success btn-square form-control btn-lg" style="height:50px;">Back to List</a>
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <button type="submit" class="btn btn-primary form-control btn-lg" style="height:50px;">Add to Cart</button>
+                                        </div>
+                                    </div>
+                                    @if (!string.IsNullOrEmpty(errorMessage))
+                                    {
+                                        <div class="alert alert-danger mt-2">@errorMessage</div>
+                                    }
+                                </EditForm>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public int ProductId { get; set; }
+
+    private ProductDto? product;
+    private string? errorMessage;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        product = await ProductService.GetProductByIdAsync(ProductId);
+    }
+
+    private async Task AddToCart()
+    {
+        if (product == null) return;
+
+        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+        var userId = authState.User.FindFirst("sub")?.Value ?? string.Empty;
+
+        var cartHeader = new CartHeaderDto { UserId = userId };
+        var cartDto = new CartDto
+        {
+            CartHeader = cartHeader,
+            CartDetails = new List<CartDetailsDto>
+            {
+                new CartDetailsDto
+                {
+                    Count = product.Count,
+                    ProductId = product.ProductId,
+                    Product = product,
+                    CartHeader = cartHeader,
+                    CartHeaderId = cartHeader.CartHeaderId
+                }
+            }
+        };
+
+        var response = await CartService.AddToCartAsync(cartDto);
+        if (response?.IsSuccess == true)
+        {
+            Navigation.NavigateTo("/");
+        }
+        else
+        {
+            errorMessage = response?.DisplayMessage ?? "Failed to add item to cart.";
+        }
+    }
+}

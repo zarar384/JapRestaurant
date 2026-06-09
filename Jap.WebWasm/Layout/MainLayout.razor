@@ -1,16 +1,17 @@
 ﻿@inherits LayoutComponentBase
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
-        </div>
+<header>
+    <NavMenu />
+</header>
 
-        <article class="content px-4">
-            @Body
-        </article>
+<div class="container">
+    <main role="main" class="pb-3">
+        @Body
     </main>
 </div>
+
+<footer class="border-top footer text-muted bg-dark">
+    <div class="container">
+        &copy; 2024 - Jap.WebWasm
+    </div>
+</footer>
