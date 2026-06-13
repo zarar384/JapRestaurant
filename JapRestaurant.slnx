@@ -1,0 +1,28 @@
+<Solution>
+  <Folder Name="/ApiGateway/">
+    <Project Path="ApiGateway/Jap.Gateway/Jap.Gateway.csproj" />
+  </Folder>
+  <Folder Name="/BuildingBlocks/">
+    <Project Path="BuildingBlocks/Jap.MessageBus/Jap.MessageBus.csproj" />
+  </Folder>
+  <Folder Name="/Clients/">
+    <Project Path="Clients/Jap.Web/Jap.Web.csproj" />
+    <Project Path="Clients/Jap.WebWasm/Jap.WebWasm.csproj" />
+  </Folder>
+  <Folder Name="/Services/Coupon/">
+  <Project Path="Services/Coupon/Jap.Services.CouponAPI/Jap.Services.CouponAPI.csproj" />
+</Folder>
+<Folder Name="/Services/Email/">
+  <Project Path="Services/Email/Jap.Services.EmailAPI/Jap.Services.EmailAPI.csproj" />
+</Folder>
+<Folder Name="/Services/Identity/">
+  <Project Path="Services/Identity/Jap.Services.Identity/Jap.Services.Identity.csproj" />
+</Folder>
+<Folder Name="/Services/Order/">
+  <Project Path="Services/Order/Jap.Services.OrderAPI/Jap.Services.OrderAPI.csproj" />
+</Folder>
+<Folder Name="/Services/Payment/">
+  <Project Path="Services/Payment/Jap.Services.PaymentAPI/Jap.Services.PaymentAPI.csproj" />
+  <Project Path="Services/Payment/PaymentProcess/PaymentProcess.csproj" />
+</Folder>
+</Solution>

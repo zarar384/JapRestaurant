@@ -381,7 +381,6 @@ MigrationBackup/
 /Jap.Services.ProductAPI/Migrations/
 /Jap.Services.ShoppingCartAPI/Migrations/
 
-
 # Services
 /Jap.Services.CouponAPI/appsettings.json
 /Jap.Services.EmailAPI/appsettings.json
@@ -390,3 +389,7 @@ MigrationBackup/
 /Jap.Services.PaymentAPI/appsettings.json
 /Jap.Services.ProductAPI/appsettings.json
 /Jap.Services.ShoppingCartAPI/appsettings.json
+
+# Except
+!Clients/**/appsettings.json
+!ApiGateway/**/appsettings.json
