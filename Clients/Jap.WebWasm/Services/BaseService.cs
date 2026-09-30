@@ -17,6 +17,8 @@ namespace Jap.WebWasm.Services
         {
             var client = _httpClientFactory.CreateClient("JapApi");
             var message = new HttpRequestMessage();
+
+            // Request and response data are exchanged as JSON.
             message.Headers.Add("Accept", "application/json");
             message.RequestUri = new Uri(request.Url);
 
@@ -28,6 +30,7 @@ namespace Jap.WebWasm.Services
                     "application/json");
             }
 
+            // Convert the application request type to the corresponding HTTP method.
             message.Method = request.ApiType switch
             {
                 SD.ApiType.POST => HttpMethod.Post,
@@ -41,11 +44,13 @@ namespace Jap.WebWasm.Services
 
             try
             {
+                // Ignore property name casing differences between the API and client models.
                 return JsonSerializer.Deserialize<T>(content,
                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
             }
             catch
             {
+                // Return the default value if the response cannot be deserialized.
                 return default;
             }
         }

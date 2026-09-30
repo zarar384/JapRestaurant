@@ -11,10 +11,10 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 // Read service base URLs from configuration and populate SD
-SD.ProductAPIBase     = builder.Configuration["ServiceUrls:ProductAPI"]      ?? string.Empty;
+SD.ProductAPIBase = builder.Configuration["ServiceUrls:ProductAPI"] ?? string.Empty;
 SD.ShoppingCartAPIBase = builder.Configuration["ServiceUrls:ShoppingCartAPI"] ?? string.Empty;
-SD.CouponAPIBase      = builder.Configuration["ServiceUrls:CouponAPI"]        ?? string.Empty;
-SD.IdentityAPIBase    = builder.Configuration["ServiceUrls:IdentityAPI"]      ?? string.Empty;
+SD.CouponAPIBase = builder.Configuration["ServiceUrls:CouponAPI"] ?? string.Empty;
+SD.IdentityAPIBase = builder.Configuration["ServiceUrls:IdentityAPI"] ?? string.Empty;
 
 // Named HttpClient that attaches the OIDC bearer token automatically
 builder.Services.AddHttpClient("JapApi", client =>
