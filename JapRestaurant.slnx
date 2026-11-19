@@ -5,10 +5,10 @@
   <Folder Name="/BuildingBlocks/">
     <Project Path="BuildingBlocks/Jap.MessageBus/Jap.MessageBus.csproj" />
   </Folder>
-  <Folder Name="/Clients/">
+  <Folder Name="/Client/">
     <Project Path="Clients/Jap.Web/Jap.Web.csproj" />
-    <Project Path="Clients/Jap.WebWasm/Jap.WebWasm.csproj" />
   </Folder>
+  <Folder Name="/Services/" />
   <Folder Name="/Services/Coupon/">
   <Project Path="Services/Coupon/Jap.Services.CouponAPI/Jap.Services.CouponAPI.csproj" />
 </Folder>
