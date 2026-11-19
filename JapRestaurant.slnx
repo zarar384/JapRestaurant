@@ -6,7 +6,7 @@
     <Project Path="BuildingBlocks/Jap.MessageBus/Jap.MessageBus.csproj" />
   </Folder>
   <Folder Name="/Client/">
-    <Project Path="Clients/Jap.Web/Jap.Web.csproj" />
+    <Project Path="Client/Jap.Web/Jap.Web.csproj" />
   </Folder>
   <Folder Name="/Services/" />
   <Folder Name="/Services/Coupon/">
